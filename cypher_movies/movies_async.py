@@ -39,7 +39,7 @@ async def get_db():
 
 @app.get("/")
 async def get_index():
-    return FileResponse(os.path.join(PATH, "static", "index.html"))
+    return FileResponse(os.path.join(PATH, "../static", "index.html"))
 
 
 def serialize_movie(movie):

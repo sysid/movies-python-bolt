@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+typer = "*"
+neo4j = "==5.0.0a1"
+#starlette = "*"
+uvicorn = "*"
+
+[dev-packages]
+codecov = "*"
+flake8 = "*"
+flake8-bugbear = "*"
+mypy = "*"
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+
+[requires]
+python_version = "3.10"
