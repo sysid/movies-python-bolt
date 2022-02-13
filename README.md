@@ -1,5 +1,10 @@
 # Cypher
 
+## Recommendation Engine
+- Usecase, Product
+- every Usecase must have complete product association
+- Usecase acts as filter (MATCH all relationships: Usecase -- product)
+
 - requires latest driver for async
 - :play movies
 
