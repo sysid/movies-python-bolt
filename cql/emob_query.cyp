@@ -22,13 +22,41 @@
 // get all nodes affected by constrain transitively
 MATCH path1 = (c:Constraint)-[:EXCLUDES]->(product:Product)
     where c.name in ['small_home']
-    OPTIONAL MATCH path2 = (p)<-[:REQUIRES*]-(q:Product)
+    OPTIONAL MATCH path2 = (p:Product)<-[:REQUIRES*]-(q:Product)
     unwind nodes(path1) + nodes(path2) as m
     with m
     where not m:Constraint
     return distinct m
 //    return distinct [x in nodes(p1) where x:Product]
 
+// get node with no connections
+MATCH path1 = (c:Constraint)-[:EXCLUDES]->(product:Product)
+    where c.name in ['small_home']
+    OPTIONAL MATCH path2 = (p:Product)<-[:REQUIRES*]-(q:Product)
+    unwind nodes(path1) + nodes(path2) as m
+    with m
+    where not m:Constraint
+    with distinct m
+    match (u:Usecase), (m)
+    where not (u)-[:REQUIRES]->(m)
+    return *
+
+// get the use-case which is not affected by constraint
+MATCH path1 = (c:Constraint)-[:EXCLUDES]->(product:Product)
+    where c.name in ['small_home']
+    OPTIONAL MATCH path2 = (p:Product)<-[:REQUIRES*]-(q:Product)
+    unwind nodes(path1) + nodes(path2) as m
+    with m
+    where not m:Constraint
+    with collect(distinct m) as products
+    match (u:Usecase)-[:REQUIRES]->(pp:Product)
+    where not pp.name in [x in products | x.name]
+    return u, pp.name, [x in products | x.name]
+//    where all((not (u)-[:REQUIRES]->(x)) in node_list)
+
+match (p:Product), (q:Product {name: 'ep'})
+    where p in [q]
+    return q
 
 // Chain the constraints together
 //MATCH (u1:Usecase)-[:REQUIRES*]->(product:Product)
