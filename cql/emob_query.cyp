@@ -50,9 +50,8 @@ MATCH path1 = (c:Constraint)-[:EXCLUDES]->(product:Product)
     where not m:Constraint
     with collect(distinct m) as products
     match (u:Usecase)-[:REQUIRES]->(pp:Product)
-    where not pp.name in [x in products | x.name]
-    return u, pp.name, [x in products | x.name]
-//    where all((not (u)-[:REQUIRES]->(x)) in node_list)
+    where not pp in products
+    return u
 
 match (p:Product), (q:Product {name: 'ep'})
     where p in [q]
