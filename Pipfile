@@ -9,6 +9,7 @@ typer = "*"
 neo4j = "==5.0.0a1"
 #starlette = "*"
 uvicorn = "*"
+networkx-neo4j = "*"
 
 [dev-packages]
 codecov = "*"
